@@ -47,7 +47,11 @@ module Godmin
       end
 
       def find_resource(id)
-        resources_relation.find(id)
+        if(resources_relation.respond_to?(:friendly))
+          resources_relation.friendly.find(params[:id])
+        else
+          resources_relation.find(id)
+        end
       end
 
       def build_resource(params)
